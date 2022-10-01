@@ -1,0 +1,13 @@
+{{- define "common.metadata.tpl" -}}
+metadata:
+  name: {{ include "common.appName" . }}
+  labels:
+    helm.sh/chart: {{ include "common.chart" . }}
+    app: {{ include "common.appName" . }}
+{{- end -}}
+
+
+{{- define "common.metadata" -}}
+{{- include "common.util.merge" (append . "common.metadata.tpl") -}}
+{{- end -}}
+

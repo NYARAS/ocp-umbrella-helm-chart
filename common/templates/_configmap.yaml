@@ -1,0 +1,27 @@
+{{- define "common.configmap.tpl" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "common.appName" . }}
+  labels: {}
+data:
+  .env: |-
+{{ .Files.Get ".env" | indent 4 }}
+  logback.xml: |+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE xml>
+    <configuration>
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <root level="info">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </configuration>
+{{- end -}}
+
+{{- define "common.configmap" -}}
+{{- include "common.util.merge" (append . "common.configmap.tpl") -}}
+{{- end -}}

@@ -1,0 +1,19 @@
+{{- define "common.service.http.tpl" -}}
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "common.appName" . }}
+  labels: {}
+spec:
+  ports:
+    - port: {{ .Values.deploy.servicePort }}
+      targetPort: {{ .Values.deploy.containerPort }}
+  selector:
+  {{- include "common.selectorLabels" . | nindent 4 }}
+  type: ClusterIP
+  sessionAffinity: None
+{{- end -}}
+
+{{- define "common.service.http" -}}
+{{- include "common.util.merge" (append . "common.service.http.tpl") -}}
+{{- end -}}
