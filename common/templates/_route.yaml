@@ -1,0 +1,24 @@
+{{- define "common.route.tpl" -}}
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: {{ include "common.appName" . }}
+  labels: {}
+  annotations:
+    openshift.io/host.generated: 'true'
+spec:
+  to:
+    kind: Service
+    name: {{ include "common.appName" . }}
+    weight: 100
+  {{- if .Values.deploy.route.tls.enabled }}
+  tls:
+    termination: {{ .Values.deploy.route.tls.termination }}
+    insecureEdgeTerminationPolicy: {{ .Values.deploy.route.tls.insecureEdgeTerminationPolicy }}
+  {{- end }}
+{{- end }}
+
+
+{{- define "common.route" -}}
+{{- include "common.util.merge" (append . "common.route.tpl") -}}
+{{- end -}}

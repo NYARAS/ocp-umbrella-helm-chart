@@ -1,0 +1,76 @@
+{{- define "common.deployment.tpl" -}}
+{{- $common := dict "Values" .Values.common -}} 
+{{- $noCommon := omit .Values "common" -}} 
+{{- $overrides := dict "Values" $noCommon -}} 
+{{- $noValues := omit . "Values" -}} 
+{{- with merge $noValues $overrides $common -}}
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ include "common.appName" . }}
+  labels: {}
+spec:
+  strategy:
+    type: Recreate
+  replicas: {{ .Values.deploy.replicas }}
+  selector:
+    matchLabels:
+      {{- include "common.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      name: {{ include "common.appName" . }}
+      labels: {}
+    spec:
+      {{- if .Values.deploy.initContainers }}
+      initContainers:
+        {{- tpl (toYaml .Values.deploy.initContainers) . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ include "common.appName" . }}
+          image: {{ include "common.appImage" . }}
+          imagePullPolicy: Always
+          ports:
+          - name: http
+            containerPort: {{ .Values.deploy.containerPort }}
+            protocol: TCP
+          {{- if .Values.deploy.resources }}
+          resources:
+            {{- toYaml .Values.deploy.resources | nindent 12 }}
+          {{- end }}
+          {{- if .Values.deploy.livenessProbe }}
+          livenessProbe:
+            {{- tpl (toYaml .Values.deploy.livenessProbe) . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.deploy.readinessProbe }}
+          readinessProbe:
+            {{- tpl (toYaml .Values.deploy.readinessProbe) . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.deploy.volumeMounts }}
+          volumeMounts:
+            {{- tpl (toYaml .Values.deploy.volumeMounts) . | nindent 12 }}
+          {{- end }}
+          env:
+            {{- range $name, $value := merge .Values.global.environment .Values.environment }}
+            - name: {{ $name | quote}}
+              value: {{ $value | quote }}
+          {{- end }}
+          {{- if .Values.deploy.env }}
+          {{- tpl (toYaml .Values.deploy.env) . | nindent 10 }}
+          {{- end }}
+          {{- if .Values.deploy.envFrom }}
+          envFrom:
+          {{- tpl (toYaml .Values.deploy.envFrom) . | nindent 10 }}
+          {{- end }}
+        {{- if .Values.deploy.extraContainers }}
+        {{- tpl (toYaml .Values.deploy.extraContainers) . | nindent 8 }}
+        {{- end }}
+      {{- if .Values.deploy.volumes }}
+      volumes:
+        {{- tpl (toYaml .Values.deploy.volumes) . | nindent 8 }}
+      {{- end }}
+{{ end }}
+{{- end -}}
+
+{{- define "common.deployment" -}}
+{{- include "common.util.merge" (append . "common.deployment.tpl") -}}
+{{- end -}}
