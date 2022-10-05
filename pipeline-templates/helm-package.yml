@@ -1,0 +1,19 @@
+steps:
+  - task: HelmInstaller@1
+    displayName: "install helm"
+    inputs:
+      helmVersionToInstall: $(helmVersion)
+  # - bash: |
+  #     echo $(registryPassword) | helm registry login $(registryName).azurecr.io --username $(registryLogin) --password-stdin
+  #     $(helm package --app-version $(imageTag) --version $(helmChartVersion) ./$(projectName)
+  #     ls
+  #     helm push $(registryName).azurecr.io/charts/$(projectName):$(helmChartVersion)
+  #     echo $(jq -n --arg version "$(helmChartVersion)" '{helmChartVersion: $version}') > $(build.artifactStagingDirectory)/variables.json
+  #   failOnStderr: true
+  #   displayName: "helm package"
+  # - task: CopyFiles@2
+  #   inputs:
+  #     sourceFolder: $(helmfrom)
+  #     targetFolder: $(helmto)
+  # - publish: $(build.artifactStagingDirectory)
+  #   artifact: build-artifact

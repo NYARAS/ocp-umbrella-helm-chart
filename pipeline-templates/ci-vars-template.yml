@@ -1,0 +1,17 @@
+parameters:
+  projectName: ""
+  dockerRegistryServiceConnectionName: ""
+  dockerfile: ""
+  buildContext: ""
+
+variables:
+  HELM_EXPERIMENTAL_OCI: 1
+  helmVersion: latest
+  registryServerName: "$(registryName).azurecr.io"
+  dockerRegistryServiceConnectionName: ${{ parameters.dockerRegistryServiceConnectionName }}
+  helmChartVersion: $(build.sourceBranchName)
+  helmfrom: $(Build.SourcesDirectory)/common
+  helmto: $(Build.ArtifactStagingDirectory)/common
+  projectName: ${{ parameters.projectName }}
+  imageName: ${{ parameters.projectName }}
+  imageTag: $(build.sourceBranchName)

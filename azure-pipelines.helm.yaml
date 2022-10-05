@@ -1,0 +1,27 @@
+name: 0.1.$(Rev:r)
+
+trigger:
+  batch: true
+  paths:
+    include:
+      - demo-devops/common
+      - demo-devops/azure-pipelines.helm.yaml
+    exclude:
+      - demo-devops/demo-deploy
+  branches:
+    include:
+    - /*
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: az-acr
+  - template: ./pipeline-templates/ci-vars-template.yml
+    parameters:
+      projectName: "common"
+      dockerRegistryServiceConnectionName: "demohelmchart"
+      buildContext: "$(System.DefaultWorkingDirectory)"
+
+steps:
+  - template: ./pipeline-templates/helm-package.yml
