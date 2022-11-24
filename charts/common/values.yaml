@@ -10,21 +10,40 @@ global:
   targetCPUup: 75
 
 image:
+  tag: latest
+  name: twalter/openshift-nginx
+build:
+  enabled: false
+deploy:
+  enabled: true
+  replicas: 1
+  servicePort: 8081
+  containerPort: 8081
+  route:
+    enabled: true
+    tls:
+      enabled: true
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+  livenessProbe:
+    # httpGet:
+    #   path: /health/live
+    #   port: admin
+  readinessProbe:
+    # httpGet:
+    #   path: /health/ready
+    #   port: admin
 
-nameOverride: ""
-fullnameOverride: ""
+  resources:
+    limits:
+      cpu: 200m
+      memory: 400M
+    requests:
+      cpu: 100m
+      memory: 200M
 
-resources: {}
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
+### Service specific environment variables
 environment: {}
 
-
-amq:
-  username: ""
-  password: ""
+### Service specific secrets
+secrets: {}

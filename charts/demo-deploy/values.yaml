@@ -40,3 +40,6 @@ deploy:
 
 ### Service specific environment variables
 environment: {}
+
+### Service specific secrets
+secrets: {}
