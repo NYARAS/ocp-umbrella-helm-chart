@@ -3,9 +3,10 @@
 # Don't add the 'debug' attribute, otherwise the workflow won't work anymore
 # Only Used for the CT Lint Stage
 remote: origin
-target-branch: main
+target-branch: feature/configure-ga-helm-lint-and-test
 chart-dirs:
   - demo-deploy
+  - common
 helm-extra-args: "--timeout 600s"
 validate-chart-schema: true
 validate-chart-values: true

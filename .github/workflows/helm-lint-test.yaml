@@ -26,24 +26,24 @@ jobs:
         id: lint
         uses: helm/chart-testing-action@afea100a513515fbd68b0e72a7bb0ae34cb62aec # tag=v2.3.1
 
-      - name: List changed charts
-        id: list-changed
-        run: |
-          ## If executed with debug this won't work anymore.
-          changed=$(ct --config ./.github/configs/ct-lint.yaml list-changed)
-          charts=$(echo "$changed" | tr '\n' ' ' | xargs)
-          if [[ -n "$changed" ]]; then
-            echo "::set-output name=changed::true"
-            echo "::set-output name=changed_charts::$charts"
-          fi
+      # - name: List changed charts
+      #   id: list-changed
+      #   run: |
+      #     ## If executed with debug this won't work anymore.
+      #     changed=$(ct --config ./.github/configs/ct-lint.yaml list-changed)
+      #     charts=$(echo "$changed" | tr '\n' ' ' | xargs)
+      #     if [[ -n "$changed" ]]; then
+      #       echo "::set-output name=changed::true"
+      #       echo "::set-output name=changed_charts::$charts"
+      #     fi
 
       - name: Run chart-testing (lint)
         run: ct lint --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml
 
       - name: Create kind cluster
         uses: helm/kind-action@9e8295d178de23cbfbd8fa16cf844eec1d773a07 # tag=v1.4.0
-        if: steps.list-changed.outputs.changed == 'true'
+        # if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run chart-testing (install)
         run: ct install --config ./.github/configs/ct-lint.yaml
-        if: steps.list-changed.outputs.changed == 'true'
+        # if: steps.list-changed.outputs.changed == 'true'
