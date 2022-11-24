@@ -1,11 +1,16 @@
 apiVersion: v2
-name: bpr
-description: Build and Deploy bpr applications on OpenShift
+name: demo
+description: Build and Deploy demo applications on OpenShift
 type: "application"
 version: 1.4.0
 
 # This is the version number of the application being deployed.
 appVersion: "0.0.1"
+
+maintainers:
+  - email: name-istakenn@gmail.com
+    name: OC # Otieno Calvine
+    url: https://calvineotieno.com
 
 dependencies:
 - name: common
