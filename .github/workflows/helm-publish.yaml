@@ -1,9 +1,6 @@
 ---
 name: chart-publish
-on:
-  push:
-    paths:
-      - "charts/**"
+on: push
 env:
   HELM_DOCS_VERSION: "1.11.0"
 
@@ -44,7 +41,7 @@ jobs:
       - name: Run Artifact Hub lint
         run: |
           curl -s https://api.github.com/repos/artifacthub/hub/releases/latest | grep -E 'browser_download_url' | grep linux_amd64.tar.gz\" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
-          ./ah lint -p charts/minecraft-exporter || exit 1
+          ./ah lint -p charts/* || exit 1
           rm -f ./ah
 
       - name: Login to GHCR
@@ -72,6 +69,6 @@ jobs:
             if [ -z "${pkg:-}" ]; then
               break
             fi
-            helm push "${pkg}" oci://ghcr.io/"${GITHUB_REPOSITORY_OWNER}"/charts > .digest
+            helm push "${pkg}" oci://ghcr.io/nyaras/charts > .digest
             cosign sign $(cat .digest | awk -F "[, ]+" '/Pushed/{print $NF}')
           done
