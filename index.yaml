@@ -43,6 +43,35 @@ entries:
     urls:
     - https://github.com/NYARAS/ocp-umbrella-helm-chart/releases/download/0.10.3-helm/common-0.10.3.tgz
     version: 0.10.3
+  - annotations:
+      artifacthub.io/changes: |
+        - cleanup and version bump
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/images: |
+        - name: common
+          image: ghcr.io/nyaras/common
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/maintainers: |
+        - name: OC # Otieno Calvine
+          email: name-istakenn@gmail.com
+    apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-11-25T18:59:02.134071817Z"
+    description: A library chart for microservice based applications deployment to
+      OCP
+    digest: bcc12318957b8d53170f3bc2a8e0a6f6611cc05deff6bb8b1a3b9961492999f4
+    home: https://github.com/nyaras/ocp-umbrella-helm-chart
+    maintainers:
+    - email: name-istakenn@gmail.com
+      name: OC
+      url: https://calvineotieno.com
+    name: common
+    sources:
+    - https://github.com/nyaras/ocp-umbrella-helm-chart
+    type: library
+    urls:
+    - https://github.com/NYARAS/ocp-umbrella-helm-chart/releases/download/0.1.0-helm/common-0.1.0.tgz
+    version: 0.1.0
   demo:
   - apiVersion: v2
     appVersion: 0.0.1
@@ -62,4 +91,4 @@ entries:
     urls:
     - https://github.com/NYARAS/ocp-umbrella-helm-chart/releases/download/1.4.0-helm/demo-1.4.0.tgz
     version: 1.4.0
-generated: "2022-11-25T15:45:25.463912497Z"
+generated: "2022-11-25T18:59:02.134079817Z"
