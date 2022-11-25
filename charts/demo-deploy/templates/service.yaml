@@ -1,4 +1,0 @@
-{{- if .Values.deploy.enabled }}
-{{- include "common.service.http" (list . "demo.metadata.labels") }}
-
-{{- end -}}
