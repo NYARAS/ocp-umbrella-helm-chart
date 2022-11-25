@@ -1,9 +1,9 @@
 apiVersion: v2
 name: common
-description: A library chart for microservice based applications
+description: A library chart for microservice based applications deployment to OCP
 type: library
-version: 0.10.3
-appVersion: 0.17.1
+version: 0.1.0
+appVersion: 0.1.0
 home: https://github.com/nyaras/ocp-umbrella-helm-chart
 sources:
   - https://github.com/nyaras/ocp-umbrella-helm-chart
@@ -15,7 +15,7 @@ maintainers:
 annotations:
   artifacthub.io/containsSecurityUpdates: "false"
   artifacthub.io/changes: |
-    - update README for OCI instructions
+    - cleanup and version bump
   artifacthub.io/images: |
     - name: common
       image: ghcr.io/nyaras/common
