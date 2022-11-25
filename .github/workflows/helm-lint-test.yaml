@@ -1,5 +1,8 @@
 name: ct-linting-and-testing
-on: push
+on:
+  push:
+    paths:
+      - "charts/**"
 
 permissions: read-all
 
@@ -36,6 +39,11 @@ jobs:
             echo "::set-output name=changed::true"
             echo "::set-output name=changed_charts::$charts"
           fi
+      - name: Run Artifact Hub lint
+        run: |
+          curl -s https://api.github.com/repos/artifacthub/hub/releases/latest | grep -E 'browser_download_url' | grep linux_amd64.tar.gz\" | grep -Eo 'https://[^\"]*' | xargs wget -O - | tar -xz
+          ./ah lint -p charts/minecraft-exporter || exit 1
+          rm -f ./ah
 
       - name: Run chart-testing (lint)
         run: ct lint --debug --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml
