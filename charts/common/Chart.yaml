@@ -8,7 +8,7 @@ home: https://github.com/nyaras/ocp-umbrella-helm-chart
 sources:
   - https://github.com/nyaras/ocp-umbrella-helm-chart
 maintainers:
-  - email: name-istakenn@gmail.com
+  - email: email.is-taken@gmail.com
     name: OC # Otieno Calvine
     url: https://calvineotieno.com
 
@@ -22,4 +22,4 @@ annotations:
   artifacthub.io/license: Apache-2.0
   artifacthub.io/maintainers: |
     - name: OC # Otieno Calvine
-      email: name-istakenn@gmail.com
+      email: email.is-taken@gmail.com
