@@ -8,7 +8,14 @@
 {{ template "chart.description" . }}
 
 
-### Installing the Chart
+## Usage
+
+Please add the common repository before installing any chart provided by this repository:
+
+```bash
+helm repo add common https://nyaras.github.io/ocp-umbrella-helm-chart
+helm repo update
+```
 
 {{ template "chart.valuesSection" . }}
 
@@ -17,6 +24,3 @@
 {{ template "chart.sourcesSection" . }}
 
 {{ template "chart.maintainersSection" . }}
-
-## Legal Disclaimer 👮
-

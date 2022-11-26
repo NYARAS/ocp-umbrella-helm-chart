@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 global:
+  # -- (int) Numbers of replicas
   replicaCount: 1
   environment: {}
   minReplicas: 1
@@ -10,7 +11,10 @@ global:
   targetCPUup: 75
 
 image:
+  # -- The docker image tag to use
+  # -- @default Chart version
   tag: latest
+  # -- The docker image repository to use
   name: twalter/openshift-nginx
 build:
   enabled: false
@@ -29,18 +33,15 @@ deploy:
     # httpGet:
     #   path: /health/live
     #   port: admin
+  
+  # -- Freeform readinessProbe field.
+  # @default HTTP Get on <ip>:admin/health/live
   readinessProbe:
-    # httpGet:
-    #   path: /health/ready
-    #   port: admin
-
-  resources:
-    limits:
-      cpu: 200m
-      memory: 400M
-    requests:
-      cpu: 100m
-      memory: 200M
+    httpGet:
+      path: /health/ready
+      port: admin
+# -- Freeform resources items
+  resources: {}
 
 ### Service specific environment variables
 environment: {}
